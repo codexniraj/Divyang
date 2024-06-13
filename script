@@ -1,0 +1,41 @@
+const sourceInput = document.getElementById("source");
+const destinationInput = document.getElementById("destination");
+const dateInput = document.getElementById("date");
+const classSelect = document.getElementById("class");
+const searchBtn = document.getElementById("searchBtn");
+
+searchBtn.addEventListener("click", () => {
+  const source = sourceInput.value;
+  const destination = destinationInput.value;
+  const date = dateInput.value;
+  const classType = classSelect.value;
+
+  // Search for trains using the entered details
+});
+
+// Add speech recognition functionality
+if ("webkitSpeechRecognition" in window) {
+  const recognition = new webkitSpeechRecognition();
+  recognition.continuous = false;
+  recognition.interimResults = false;
+  recognition.lang = "en-US";
+
+  searchBtn.addEventListener("mousedown", () => {
+    recognition.start();
+  });
+
+  recognition.addEventListener("result", (event) => {
+    const transcript = event.results[0][0].transcript;
+    if (sourceInput.value === "") {
+      sourceInput.value = transcript;
+    } else if (destinationInput.value === "") {
+      destinationInput.value = transcript;
+    } else if (dateInput.value === "") {
+      dateInput.value = transcript;
+    }
+  });
+
+  recognition.addEventListener("end", () => {
+    searchBtn.blur();
+  });
+}

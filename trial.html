@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Voice-Assisted Railway Reservation System</title>
+	
+
+	
+	
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-rbM3+3eW8sTtT/BTJZ2v+TncR/E8YJrFrHBKx1yvE/7+o62mwRhoxgJhckwZ/Hc1MNof0YkS9V7xu/D07aUH1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-lcBlSl+9IvJSxiZJiMcZt/vsWtllIzf+0oRyCjJy4Q+1X9zvK98bY3qjFgb8Ww0oHNvN/DilfDCz4/l2x4W9zQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+	
+	<!-- <audio  autoplay>
+		<source src="Vivek.mp3" type="audio/mpeg">
+	</audio> -->
+	<header>
+		<h1>Voice-assisted Railway Reservation System</h1>
+	</header>
+	<nav>
+		<ul>
+			<li><a href="index.html">Home</a></li>
+			<li><a href="train.html">Train Schedule</a></li>
+			<li><a href="reservation.html">Reservation</a></li>
+			<li><a href="contact.html">Contact Us</a></li>
+
+
+			<li>
+				<div id="google_translate_element"></div>
+				<script type="text/javascript">
+					function googleTranslateElementInit() {
+						new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'ar,bn,en,es,fr,hi,id,ja,ko,ms,my,pt,ru,ta,th,tr,vi,zh-CN,zh-TW', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false}, 'google_translate_element');
+					}
+				</script>
+				<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+			</li>
+
+		</ul>
+	</nav>
+	<main>
+		<section>
+			<h2>Book your train tickets</h2>
+	<p>Choose your source and destination stations, travel date and provide your name and other required details to get started with your booking.</p>
+	<form onsubmit="event.preventDefault(); generateTicket(); this.reset();">
+		<label for="name">Name:</label>
+		<div class="input-container">
+			<input type="text" id="name" name="name" required>
+			<span class="mic-icon"><img src="mic-off.png" alt="microphone icon"></span>
+		</div>
+		<br>
+	
+		<label for="source">Source:</label>
+		<div class="input-container">
+			<input type="text" id="source" name="source" onkeyup="generateTrainNames()" required>
+			<span class="mic-icon"><img src="mic-off.png" alt="microphone icon"></span>
+		</div>
+		<br>
+	
+		<label for="destination">Destination:</label>
+		<div class="input-container">
+			<input type="text" id="destination" name="destination" onkeyup="generateTrainNames()" required>
+			<span class="mic-icon"><img src="mic-off.png" alt="microphone icon"></span>
+		</div>
+		<br>
+	
+		<label for="travel-date">Travel Date:</label>
+		<div class="input-container">
+			<input type="text" id="travel-date" name="travel-date" placeholder="Enter travel date" required />
+			<span class="mic-icon"><img src="mic-off.png" alt="microphone icon"></span>
+		</div>
+		<br>
+	
+		<label for="class">Class:</label>
+		<div class="input-container">
+			<input type="text" id="class" name="class" placeholder="Enter class" required />
+			<span class="mic-icon"><img src="mic-off.png" alt="microphone icon"></span>
+		</div>
+		<br>
+		<br>
+	
+		<label for="train-name">Train Name:</label>
+		<select id="train-name" name="train-name" required>
+			<option value="">Select a train</option>
+		</select>
+		<br><br>
+		<button id="start-listening">Start listening</button>
+		<button id="stop-listening">Stop listening</button>
+		<button type="submit">Book Now</button>
+		<button type="reset">Reset</button>
+			
+				<style>
+					.mic-icon img {
+						height: 100%;
+						width: auto;
+						margin: 0;
+						padding: 0;
+					}
+			
+					.input-container {
+						position: relative;
+						display: inline-block;
+					}
+			
+					.mic-icon {
+						position: absolute;
+						right: 0;
+						top: 0;
+						height: 100%;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						padding-right: 10px;
+					}
+				</style>
+			</form>
+			
+			  
+			
+		</section>
+		<br>
+		<section>
+			<h2> Know your Station</h2>
+			<div class="railway-station">
+				<img src="Chhatrapati_Shivaji_Terminus_railway_station_(cropped).jpg" alt="Station 1">
+				<div class="details">
+				  <h2>Chhatrapati Shivaji Terminus, Mumbai</h2>
+				  <p>A UNESCO World Heritage site, this railway station in India was erstwhile known as the Victoria Terminus. It was built in 1887, and eventually the name changed to Chhatrapati Shivaji Terminus in 1996. The architects who designed this structure were Frederick Stevens and Axel Haig. It is architecturally one of the best railway stations in the world and the structure is built on Indo- Sarcenic Style Architecture.</p>
+				</div>
+			  </div>
+			  
+			  <div class="railway-station">
+				<img src="Charbagh_Railway_Station_Lucknow.jpg" alt="Station 2">
+				<div class="details">
+				  <h2>Char Bagh, Lucknow</h2>
+				  <p>The Char Bagh railway station in Lucknow is considered to be one of the most beautiful railway stations in India. The name Char Bagh refers to the four gardens that used to exist here. It is a really beautiful building with brilliant exteriors and looks nothing short of a Palace with a Garden in front. This architecture is a blend of the Awadhi, Rajput and the Mughal styles. An interesting feature about this railway station is that the aerial view of the station shows chess board game and the pillars and domes appear to be the pieces of the chess board.</p>
+				</div>
+			  </div>
+			  
+			  <div class="railway-station">
+				<img src="Howrah_Station.jpg" alt="Station 2">
+				<div class="details">
+				  <h2>Howrah Station, West Bengal</h2>
+				  <p>Built in 1854, the Howrah Station is the oldest railway station in India. The station is situated on the banks of the River Hooghly and it is linked to Kolkata with the help of the Howrah Bridge. It has the highest train handling capacity of any railway station in India and it has 23 platforms to serve the people.</p>
+				</div>
+			  </div>
+			  <br><br><br>
+
+			  <div class="railway-station">
+				<img src="New-Delhi-Railway-Station.jpg" alt="Station 2">
+				<div class="details">
+				  <h2>New Delhi Railway Station</h2>
+				  <p>The New Delhi Railway Station is known to be the busiest railway station in the country. The present station was founded in 1911 before which the Old Delhi Railway Station was operated for all trains.</p>
+				</div>
+			  </div>
+
+			  <div class="railway-station">
+				<img src="VijayawadaRailwayStation.jpg" alt="Station 2">
+				<div class="details">
+				  <h2>Vijayawada, Andhra Pradesh</h2>
+				  <p>One of the busiest railway stations in South India, Vijayawada Railway Station was built in 1888 when the Southern Maharatta Railway’s main route were connected with other lines going through the place. It was given the A1 status in 2008.</p>
+				</div>
+			  </div>
+
+			  <div class="railway-station">
+				<img src="Trivandrum_Central.jpg" alt="Station 2">
+				<div class="details">
+				  <h2>Trivandrum Central, Kerala</h2>
+				  <p>This station is the biggest and busiest station in God’s Own Country, Kerala. It was built in 1931 and it is also one of the oldest railway stations in India. It is a busy, yet a nicely maintained station. The building of the railway station is one of the major landmarks of the city. There are also various amenities provided within the premises.</p>
+				</div>
+			  </div>
+			  <br><br><br>
+
+			  <div class="railway-station">
+				<img src="swarajya-2023-01-48c23d20-6b61-4719-8f9e-28060b3a3135-Chennai_Central_side.jpg.avif" alt="Station 2">
+				<div class="details">
+				  <h2>Chennai Central</h2>
+				  <p>The Chennai Central railway station is regarded as the gateway to the South and it is one of the most important railway stations in South India. It is a 143 year old station and it was designed by architect Henry Irwin. It is one of the oldest railway stations is the country, yet it is one of the most well-maintained ones. Overall, it can be called the Grand Railway Station in India.</p>
+				</div>
+			  </div>
+
+			  <div class="railway-station">
+				<img src="/82304185.cms.webp" alt="Station 2">
+				<div class="details">
+				  <h2>Cuttack Railway Station, Odisha</h2>
+				  <p>Cuttack Railway station is located in Odisha and it had an amazing architect from many parts of the world. The unique look of the Cuttack Railway station is an inspiration of Barabati Fort, which was built in the 14th century and is located in Kalinga region of Odisha.</p>
+				</div>
+			  </div>
+
+			  <div class="railway-station">
+				<img src="Front-view-of-Jaisalmer-Railway-Station.jpg" alt="Station 2">
+				<div class="details">
+				  <h2>Jaisalmer Railway Station</h2>
+				  <p>Jaisalmer Railway station is one of the beautiful Railway station and home of India’s most luxurious trains. Jaisalmer is a beautiful city which is rich in history, culture, shopping destinations, cuisines and many other attractions. The Jewel of a desert, and dubbed the city of gold is generally located in the heart of the Thar Desert or says the Great Indian Desert.</p>
+				</div>
+			  </div>
+			  <br><br><br>
+
+			  <div class="railway-station">
+				<img src="dudhsagar-water-fall-amazing-view.jpg" alt="Station 2">
+				<div class="details">
+				  <h2>Dudhsagar Railway Station, Goa</h2>
+				  <p>Dudhsagar Railway station is well known for its natural beauty. The majestic Dudhsagar Waterfalls on the left of the Railway station offers the most beautiful view of Goa. The grey track will be running through the bushes all around.</p>
+				</div>
+			  </div>
+
+			  <div class="railway-station">
+				<img src="/76086250_1633451893_Photograph (1).JPG" alt="Station 2">
+				<div class="details">
+				  <h2>Ghum Railway Station, GHUM</h2>
+				  <p>Ghum Railway Station is one of the most attractive stations, located in the scenic landscape of Darjeeling. It is India’s highest and the world’s 14th highest railway station, nestled at 2,258 meters above sea level. Ghum Station started in 1881 and lies on the Darjeeling-Himalayan Railway line. This line is part of the enthralling Darjeeling toy train ride and one of the smallest railway stations in India. </p>
+				</div>
+			  </div>
+
+			  <div class="railway-station">
+				<img src="/800px-Kalka-Shimla_Railway_Barog.jpg" alt="Station 2">
+				<div class="details">
+				  <h2>Barog Railway Station</h2>
+				  <p>The Barog Railway Station has an interesting and rather unusual tale attached to it. According to locals, an engineer (Colonel Barog) committed suicide out of sheer humiliation when the two ends of a tunnel he was building near the railway station did not meet. Said to be an error of calculation, it resulted in the imposition of a one rupee fine by the British. The town itself is named after the engineer./p>
+				</div>
+			  </div>
+			  <!-- Repeat for all stations -->
+			  
+		</section>
+
+		<br><br><br>
+
+
+	</main>
+	<footer>
+		<p>&copy; 2023 Voice-assisted Railway Reservation System</p>
+	</footer>
+
+	<script>
+		window.onload = function() {
+  const recognition = new webkitSpeechRecognition();
+  recognition.lang = 'en-US';
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 1;
+
+  const nameInputField = document.querySelector('#name');
+  const sourceInputField = document.querySelector('#source');
+  const destinationInputField = document.querySelector('#destination');
+  const dateInputField = document.querySelector('#travel-date');
+  const classInputField= document.querySelector('#class')
+
+  const askName = () => {
+    const question = new SpeechSynthesisUtterance('What is your name?');
+    speechSynthesis.speak(question);
+    setTimeout(() => {
+      recognition.start();
+    }, 4000);
+  };
+
+  const askSource = () => {
+    const question = new SpeechSynthesisUtterance('What is your source?');
+    speechSynthesis.speak(question);
+    setTimeout(() => {
+      recognition.start();
+    }, 4000);
+  };
+
+  const askDestination = () => {
+    const question = new SpeechSynthesisUtterance('What is your destination?');
+    speechSynthesis.speak(question);
+    setTimeout(() => {
+      recognition.start();
+      generateTrainNames();
+    }, 4000);
+  };
+
+  const askDate = () => {
+    const question = new SpeechSynthesisUtterance('What is your travel date?');
+    speechSynthesis.speak(question);
+    setTimeout(() => {
+      recognition.start();
+    }, 4000);
+  };
+
+  const askclass = () => {
+    const question = new SpeechSynthesisUtterance('Which coach do you want for your travel , your options are , First Ac, Second AC, Third AC, Sleeper , General ');
+    speechSynthesis.speak(question);
+    setTimeout(() => {
+      recognition.start();
+    }, 6000);
+  };
+
+  const confirmDetails = () => {
+    const confirmMessage = new SpeechSynthesisUtterance(`Your travel details are as follows. Your name is ${nameInputField.value}. Source station is ${sourceInputField.value}. Destination station is ${destinationInputField.value}. Date of traveling is ${dateInputField.value}.`);
+    speechSynthesis.speak(confirmMessage);
+    
+	const confirmationQuestion = new SpeechSynthesisUtterance('Do you want to book your ticket with the above confirmed details?');
+      speechSynthesis.speak(confirmationQuestion);
+      setTimeout(() => {
+        recognition.start();
+      }, 6000);
+  }
+
+  recognition.onresult = function(event) {
+    const speechResult = event.results[0][0].transcript;
+
+    if (nameInputField.value === '') {
+      updateInputField(nameInputField, speechResult);
+      askSource();
+    } else if (sourceInputField.value === '') {
+      updateInputField(sourceInputField, speechResult);
+      askDestination();
+    } else if (destinationInputField.value === '') {
+      updateInputField(destinationInputField, speechResult);
+      askDate();
+    } else if (dateInputField.value === '') {
+      updateInputField(dateInputField, speechResult);
+      recognition.stop();
+      askclass();
+    } else if (classInputField.value === '') {
+      updateInputField(classInputField, speechResult);
+      recognition.stop();
+      confirmDetails();
+    } else if (speechResult.toLowerCase().includes('yes')) {
+      generateTicket();
+      const thankYouMessage = new SpeechSynthesisUtterance('Thank you. Your ticket has been generated.');
+      speechSynthesis.speak(thankYouMessage);
+    } else if(confirmationQuestion.value==='yes') {
+		recognition.stop();
+		generateTicket()
+
+	}else {
+      const sorryMessage = new SpeechSynthesisUtterance('Sorry, I did not understand. Please try again.');
+      speechSynthesis.speak(sorryMessage);
+      setTimeout(() => {
+        recognition.start();
+      }, 4000);
+    }
+  };
+
+  const updateInputField = (inputField, value) => {
+    inputField.value = value;
+  };
+
+  const startListeningButton = document.querySelector('#start-listening');
+  startListeningButton.addEventListener('click', () => {
+    askName();
+  });
+
+    const stopListeningButton = document.querySelector('#stop-listening');
+    stopListeningButton.addEventListener('click', () => {
+      recognition.stop();
+      console.log('Listening stopped');
+    });
+
+    const generateTicket = () => {
+      console.log('Ticket generated!');
+      const message = new SpeechSynthesisUtterance('Thank you. Your ticket has been generated.');
+      speechSynthesis.speak(message);
+    };
+  };
+
+        function generateTrainNumber() {
+  		let trainNumber = '';
+  		for (let i = 0; i < 5; i++) {
+ 	    trainNumber += Math.floor(Math.random() * 10);
+  		}
+  		return trainNumber;
+		}
+
+
+		function generateTicketId() {
+  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  let ticketId = "";
+
+  // Add two random letters
+  for (let i = 0; i < 2; i++) {
+    ticketId += letters.charAt(Math.floor(Math.random() * letters.length));
+  }
+
+  // Add four random digits
+  for (let i = 0; i < 4; i++) {
+    ticketId += Math.floor(Math.random() * 10);
+  }
+
+  return ticketId;
+}
+
+// Example usage
+const randomTicketId = generateTicketId();
+console.log(randomTicketId);
+
+
+
+
+		function generateTicket() {
+        const name = document.getElementById("name").value;
+        const source = document.getElementById("source").value;
+        const destination = document.getElementById("destination").value;
+        const travelDate = document.getElementById("travel-date").value;
+        const travelClass = document.getElementById("class").value;
+		const traveltrain = document.getElementById("train-name").value;
+		
+
+        
+        if (name === "" || source === "" || destination === "" || travelDate === "" || travelClass === "") {
+          alert("Please fill in all the required fields.");
+          return;
+        }
+		// Generate random seat number
+		const seatNumber = Math.floor(Math.random() * 100) + 1;
+    	let seatType;
+    	if (seatNumber <= 30) {
+    	    seatType = "L";
+    	} else if (seatNumber <= 70) {
+      	  seatType = "M";
+    	} else {
+      	  seatType = "U";
+    	}
+    	const seat = seatNumber + seatType;
+
+		
+
+        
+        const ticket = `
+ 		<style>
+  		  /* CSS styles for the ticket */
+		  body{
+			background-image: url("train_reservation.jpg");
+		  }
+  		  h2 {
+   		   font-size: 24px;
+     		 margin-bottom: 20px;
+    		}
+    		p {
+     		 font-size: 18px;
+     		 margin-bottom: 10px;
+    		}
+    			strong {
+    		  font-weight: bold;
+    		}
+  		</style>
+		
+  		<div class="ticket">
+    			<h2>Ticket Details</h2>
+				<p><strong>Ticket Id :</strong> ${generateTicketId()}</p>
+				<p><strong>Train Number:</strong> ${generateTrainNumber()}</p>
+    			<p><strong>Name:</strong> ${name}</p>
+   				 <p><strong>From:</strong> ${source}</p>
+    			<p><strong>To:</strong> ${destination}</p>
+    			<p><strong>Travel Date:</strong> ${travelDate}</p>
+    			<p><strong>Class:</strong> ${travelClass}</p>
+				<p><strong>Train :</strong> ${traveltrain}</p>
+				<p><strong>Seat Number:</strong> ${seat}</p>
+
+
+  		</div>
+`;
+
+
+        
+        const ticketDiv = document.createElement("div");
+        ticketDiv.innerHTML = ticket;
+        
+        document.body.appendChild(ticketDiv);
+      }
+	</script>
+	<script>
+		function generateTrainNames() {
+			const source = document.getElementById("source").value;
+			const destination = document.getElementById("destination").value;
+
+			// Create an array of train names
+			const trainNames = ["Rajdhani Express", `${source} - ${destination} Express`, "Shatabdi Express", `${source} Superfast Express`, `${destination} Duronto Express`, `${source} - ${destination} Jan Shatabdi Express`, `${destination} - ${source} Duronto Express`, `${destination} - ${source} Superfast Express`, `${source} Garib Rath Express`, `${destination} Garib Rath Express`];
+
+			// Get the train name dropdown element
+			const trainNameDropdown = document.getElementById("train-name");
+
+			// Remove existing options from the dropdown
+			trainNameDropdown.innerHTML = "";
+
+			// Add 10 random train names to the dropdown
+			for (let i = 0; i < 10; i++) {
+				// Randomly select a train name from the trainNames array
+				const randomTrainIndex = Math.floor(Math.random() * trainNames.length);
+				const trainName = trainNames[randomTrainIndex];
+
+				// Generate a random 5-digit train number
+				const trainNumber = Math.floor(Math.random() * 90000) + 10000;
+
+				// Generate a random departure time in hh:mm format
+				const hours = Math.floor(Math.random() * 24);
+				const minutes = Math.floor(Math.random() * 60);
+				const departureTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+
+				// Create an option element for the train name with the train number and departure time, and add it to the dropdown
+				const option = document.createElement("option");
+				option.text = `${trainName} (${trainNumber}) - Departure Time: ${departureTime}`;
+				trainNameDropdown.add(option);
+			}
+		}
+	</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" integrity="sha512-MNFSVg5NlU/V7V0Cj6UgL/4uI4ZJth7bKjEiX9rMUyG1rDCvL69ajLQHhA7nZ14wbnfY1+CZnB8z9lEtTXxvdA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	
+
+const ticketId = generateTicketId();
+console.log(ticketId);
+
+	</script>
+</body>
+</html>
+
+
+
+
+

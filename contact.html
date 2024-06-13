@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Contact Us | My Reservation Website</title>
+  <link rel="stylesheet" type="text/css" href="contact.css">
+</head>
+<body>
+  <header>
+    <h1>Voice-assisted Railway Reservation System</h1>
+  </header>
+    <nav>
+		<ul>
+			<li><a href="index.html">Home</a></li>
+			<li><a href="train.html">Train Schedule</a></li>
+			<li><a href="reservation.html">Reservation</a></li>
+			<li><a href="contact.html">Contact Us</a></li>
+      <li>
+				<div id="google_translate_element"></div>
+				<script type="text/javascript">
+					function googleTranslateElementInit() {
+						new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'ar,bn,en,es,fr,hi,id,ja,ko,ms,my,pt,ru,ta,th,tr,vi,zh-CN,zh-TW', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false}, 'google_translate_element');
+					}
+				</script>
+				<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+			</li>
+			<!-- <li>
+				<div id="google_translate_element"></div>
+				<script type="text/javascript">
+					function googleTranslateElementInit() {
+						new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'ar,bn,en,es,fr,hi,id,ja,ko,ms,my,pt,ru,ta,th,tr,vi,zh-CN,zh-TW', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false}, 'google_translate_element');
+					}
+				</script>
+				<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+			</li> -->
+		</ul>
+	</nav>
+  
+
+  <main>
+    <section>
+			<h2>Contact us</h2>
+			<form>
+				<p>Fill out the form below to get in touch with us: </p>
+        <form id="my_form">
+          <label for="name">Name:</label>
+          <div class="input-container">
+              <input type="text" id="name" name="name" >
+              <span class="mic-icon"><img src="mic-off.png" alt="microphone icon"></span>
+          </div>
+      
+          <label for="subject">Subject:</label>
+          <div class="input-container">
+              <input type="text" id="subject" name="subject" >
+              <span class="mic-icon"><img src="mic-off.png" alt="microphone icon"></span>
+          </div>
+      
+          <label for="email">Email:</label>
+          <div class="input-container">
+              <input type="email" id="email" name="email" >
+              <span class="mic-icon"><img src="mic-off.png" alt="microphone icon"></span>
+          </div>
+      
+          <label for="phone">Phone:</label>
+          <div class="input-container">
+              <input type="tel" id="phone" name="phone" >
+              <span class="mic-icon"><img src="mic-off.png" alt="microphone icon"></span>
+          </div>
+      
+          <label for="message">Message:</label>
+          <div class="input-container">
+              <textarea id="message" name="message" ></textarea>
+              <span class="mic-icon"><img src="mic-off.png" alt="microphone icon"></span>
+          </div>
+
+          <br>
+      
+          <div id="my_form" >
+            <button type="menu" id="nextStep">Submit</button>
+          </div>
+          
+          <div id="thank_you" style="display: none;">
+            <p>Thanks for filling up the form!</p>
+            <button type="submit">Close</button>
+          </div>
+
+          <style>
+					.mic-icon img {
+						height: 100%;
+						width: auto;
+						margin: 0;
+						padding: 0;
+					}
+			
+					.input-container {
+						position: relative;
+					}
+			
+					.mic-icon {
+						position: absolute;
+						right: 0;
+						top: 0;
+						height: 100%;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						padding-right: 10px;
+					}
+				</style>
+			</form>
+      </form>
+      
+    </section> 
+
+    <BR>
+      <BR>
+
+    <section>
+      <div class="contact-info">
+        <h2>Contact Information</h2>
+        <p><strong>Address:</strong> VIT Bhopal University, Dist.Sehore, village Kothrikalan, 466114</p>
+        <p><strong>Phone:</strong>0755-6610661 </p>
+        <p><strong>Email:</strong> info@myreservationwebsite.com</p>
+      </div>
+    </section>
+      <br>
+      <br>
+      <br><br><br>
+    
+
+			
+				</select>
+  </main>
+
+  <footer>
+		<p>&copy; 2023 Voice-assisted Railway Reservation System</p>
+	</footer>
+  <script>
+
+    var nextStep = document.querySelector('#nextStep');
+  
+    nextStep.addEventListener('click', function (e) {
+      e.preventDefault();
+      // Hide first view
+      document.getElementById('my_form').style.display = 'none';
+  
+      // Show thank you message element
+      document.getElementById('thank_you').style.display = 'block';
+    });
+
+</script>
+    <script>
+  
+  
+
+  
+    // Create a new instance of SpeechRecognition object
+    const recognition = new webkitSpeechRecognition();
+
+    // Set the language to English (US)
+    recognition.lang = 'en-US';
+
+    // Set the input language
+    recognition.interimResults = false;
+
+    // Listen for the "name" input field and update its value with the user's speech input
+    document.querySelector('#name').addEventListener('click', () => {
+        recognition.start();
+        console.log('Ready to receive input for name.');
+        recognition.onresult = function(event) {
+            const speechResult = event.results[0][0].transcript;
+            document.querySelector('#name').value = speechResult;
+        };
+    });
+
+    // Listen for the "subject" input field and update its value with the user's speech input
+    document.querySelector('#subject').addEventListener('click', () => {
+        recognition.start();
+        console.log('Ready to receive input for subject.');
+        recognition.onresult = function(event) {
+            const speechResult = event.results[0][0].transcript;
+            document.querySelector('#subject').value = speechResult;
+        };
+    });
+
+    // Listen for the "email" input field and update its value with the user's speech input
+    document.querySelector('#email').addEventListener('click', () => {
+        recognition.start();
+        console.log('Ready to receive input for email.');
+        recognition.onresult = function(event) {
+            const speechResult = event.results[0][0].transcript;
+            document.querySelector('#email').value = speechResult;
+        };
+    });
+
+    // Listen for the "phone" input field and update its value with the user's speech input
+    document.querySelector('#phone').addEventListener('click', () => {
+        recognition.start();
+        console.log('Ready to receive input for phone.');
+        recognition.onresult = function(event) {
+            const speechResult = event.results[0][0].transcript;
+            document.querySelector('#phone').value = speechResult;
+        };
+    });
+
+    // Listen for the "message" input field and update its value with the user's speech input
+    document.querySelector('#message').addEventListener('click', () => {
+        recognition.start();
+        console.log('Ready to receive input for message.');
+        recognition.onresult = function(event) {
+            const speechResult = event.results[0][0].transcript;
+            document.querySelector('#message').value = speechResult;
+        };
+    });
+  </script>
+  
+</body>
+</html>
+
+
+

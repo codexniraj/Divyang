@@ -1,0 +1,161 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Train</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="train.css">
+	
+</head>
+<body>
+    
+	<header>
+		<h1>Voice-assisted Railway Reservation System</h1>
+	</header>
+	
+	<nav>
+		<ul>
+			<li><a href="index.html">Home</a></li>
+			<a href="train.html">Train Schedule</a>
+			<li><a href="reservation.html">Reservation</a></li>
+			<li><a href="contact.html">Contact Us</a></li>
+			<li>
+				<div id="google_translate_element"></div>
+				<script type="text/javascript">
+					function googleTranslateElementInit() {
+						new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'ar,bn,en,es,fr,hi,id,ja,ko,ms,my,pt,ru,ta,th,tr,vi,zh-CN,zh-TW', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false}, 'google_translate_element');
+					}
+				</script>
+				<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+			</li>
+			
+		</ul>
+	</nav>
+	
+	<main>
+		<section>
+			<h2>Train Schedule </h2>
+			<p>Enter the details to find train schedule:</p>
+			<form>
+				<label for="source">Source:</label>
+				<div class="input-container">
+					<input type="text" id="source" name="source" onkeyup="generateTrainNames()" required>
+					<span class="mic-icon"><img src="mic-off.png" alt="microphone icon"></span>
+				</div>
+				<br>
+			
+				<label for="destination">Destination:</label>
+				<div class="input-container">
+					<input type="text" id="destination" name="destination" onkeyup="generateTrainNames()" required>
+					<span class="mic-icon"><img src="mic-off.png" alt="microphone icon"></span>
+				</div>
+				<br>
+    
+        <label for="date">Date of travel:</label>
+        <input type="date" id="date" name="date"><br><br>
+    
+        <input type="button" value="Submit" onclick="displayTrains()">
+		<style>
+			.mic-icon img {
+				height: 60%;
+				width: auto;
+				margin: 0;
+				padding: 0;
+			}
+	
+			.input-container {
+				position: relative;
+				display: inline-block;
+			}
+	
+			.mic-icon {
+				position: absolute;
+				right: 0;
+				top: 0;
+				height: 100%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				padding-right: 10px;
+			}
+		</style>
+      </form>
+    
+      <div id="train-list"></div>
+		</section>
+	</main>
+	
+	<footer>
+		<p>&copy; 2023 Voice-assisted Railway Reservation System</p>
+	</footer>
+  <script>
+		function displayTrains() {
+			const source = document.getElementById("source").value;
+			const destination = document.getElementById("destination").value;
+			const date = document.getElementById("date").value;
+
+			// Create an array of train names
+			const trainNames = ["Rajdhani Express", `${source} - ${destination} Express`, "Shatabdi Express", `${source} Superfast Express`, `${destination} Duronto Express`, `${source} - ${destination} Jan Shatabdi Express`, `${destination} - ${source} Duronto Express`, `${destination} - ${source} Superfast Express`, `${source} Garib Rath Express`, `${destination} Garib Rath Express`];
+
+			const trainList = document.getElementById("train-list");
+			trainList.innerHTML = "";
+
+			// Create 10 random train schedules
+			for (let i = 1; i <= 10; i++) {
+				// Randomly select a train name from the trainNames array
+				const randomTrainIndex = Math.floor(Math.random() * trainNames.length);
+				const trainName = trainNames[randomTrainIndex];
+
+				// Generate random time of departure between 5:00 AM and 11:00 PM
+				const hours = Math.floor(Math.random() * 18) + 5;
+				const minutes = Math.floor(Math.random() * 60);
+				const time = `${hours}:${minutes < 10 ? "0" + minutes : minutes}`;
+
+				// Create a div element to display the train schedule
+				const trainDiv = document.createElement("div");
+				trainDiv.innerHTML = `<p>${i}. Train Name: ${trainName}</p><p>Departure time: ${time}</p><br>`;
+				trainList.appendChild(trainDiv);
+			}
+		}
+	</script>
+	
+
+	<script>
+		// Create a new instance of SpeechRecognition object
+		const recognition = new webkitSpeechRecognition();
+
+		// Set the language to English (US)
+		recognition.lang = 'en-US';
+
+		// Set the input language
+		recognition.interimResults = false;
+		
+		// Listen for the "source" input field and update its value with the user's speech input
+		document.querySelector('#source').addEventListener('click', () => {
+			recognition.start();
+			console.log('Ready to receive input for source.');
+			recognition.onresult = function(event) {
+				const speechResult = event.results[0][0].transcript;
+				document.querySelector('#source').value = speechResult;
+			};
+		});
+
+		// Listen for the "destination" input field and update its value with the user's speech input
+		document.querySelector('#destination').addEventListener('click', () => {
+			recognition.start();
+			console.log('Ready to receive input for destination.');
+			recognition.onresult = function(event) {
+				const speechResult = event.results[0][0].transcript;
+				document.querySelector('#destination').value = speechResult;
+			};
+		});
+	</script>
+	
+</body>
+</html>
+
+
+
+
+

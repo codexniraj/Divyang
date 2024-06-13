@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Train Booking Form</title>
+	<script>
+		function generateTrainNames() {
+			const source = document.getElementById("source").value;
+			const destination = document.getElementById("destination").value;
+
+			// Create an array of train names
+			const trainNames = ["Rajdhani Express", `${source} - ${destination} Express`, "Shatabdi Express", `${source} Superfast Express`, `${destination} Duronto Express`, `${source} - ${destination} Jan Shatabdi Express`, `${destination} - ${source} Duronto Express`, `${destination} - ${source} Superfast Express`, `${source} Garib Rath Express`, `${destination} Garib Rath Express`];
+
+			// Get the train name dropdown element
+			const trainNameDropdown = document.getElementById("train-name");
+
+			// Remove existing options from the dropdown
+			trainNameDropdown.innerHTML = "";
+
+			// Add 10 random train names to the dropdown
+			for (let i = 0; i < 10; i++) {
+				// Randomly select a train name from the trainNames array
+				const randomTrainIndex = Math.floor(Math.random() * trainNames.length);
+				const trainName = trainNames[randomTrainIndex];
+
+				// Create an option element for the train name and add it to the dropdown
+				const option = document.createElement("option");
+				option.text = trainName;
+				trainNameDropdown.add(option);
+			}
+		}
+	</script>
+</head>
+<body>
+	<h1>Train Booking Form</h1>
+	<section>
+		<h2>Book your train tickets</h2>
+		<p>Choose your source and destination stations, travel date and provide your name and other required details to get started with your booking.</p>
+		<form onsubmit="event.preventDefault(); generateTicket(); this.reset();">
+			<label for="name">Name:</label>
+			<div class="input-container">
+				<input type="text" id="name" name="name" required>
+				<span class="mic-icon"><img src="mic-off.png" alt="microphone icon"></span>
+			</div>
+			<br>
+	
+			<label for="source">Source:</label>
+			<div class="input-container">
+				<input type="text" id="source" name="source" onkeyup="generateTrainNames()" required>
+				<span class="mic-icon"><img src="mic-off.png" alt="microphone icon"></span>
+			</div>
+			<br>
+	
+			<label for="destination">Destination:</label>
+			<div class="input-container">
+				<input type="text" id="destination" name="destination" onkeyup="generateTrainNames()" required>
+				<span class="mic-icon"><img src="mic-off.png" alt="microphone icon"></span>
+			</div>
+			<br>
+	
+			<label for="travel-date">Travel Date:</label>
+			<div class="input-container">
+				<input type="date" id="travel-date" name="travel-date" placeholder="Enter travel date" required />
+	
+			</div>
+			<br>
+	
+			 <label for="class">Class:</label>
+			 <select id="class" name="class" required>
+				<option value="1A">First AC</option>
+				<option value="2A">Second AC</option>
+				<option value="3A">Third AC</option>
+				<option value="SL">Sleeper</option>
+				<option value="GL">General</option>
+			 </select>
+			 <br>
+			 <br>
+	
+			 <label for="train-name">Train Name:</label>
+			 <select id="train-name" name="train-name" required>
+				<option value="">Select a train</option>
+			 </select>
+			 <br><br>
+	
+			 <button type="submit">Book Now</button>
+			 <button type="reset">Reset</button>
+	
+			<style>
+				.mic-icon img {
+					height: 100%;
+					width: auto;
+					margin: 0;
+					padding: 0;
+				}
+	
+				.input-container {
+					position: relative;
+					display: inline-block;
+				}
+	
+				.mic-icon {
+					position: absolute;
+					right: 0;
+					top: 0;
+					height: 100%;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					padding-right: 10px;
+				}
+			</style>
+		</form>
+	  
+		
+	  </section>
+	  <script>
+		// Set up speech recognition
+		const recognition = new webkitSpeechRecognition();
+		recognition.continuous = true;
+		recognition.interimResults = true;
+		recognition.lang = 'en-US';
+	
+		// Listen for clicks on the microphone icon
+		const micIcons = document.querySelectorAll('.mic-icon');
+		micIcons.forEach((micIcon) => {
+			micIcon.addEventListener('click', toggleRecording);
+		});
+	
+		// Toggle recording of speech
+		function toggleRecording() {
+			if (recognition && recognition.recognizing) {
+				recognition.stop();
+				return;
+			}
+	
+			recognition.start();
+		}
+	
+		// Handle speech recognition results
+		recognition.addEventListener('result', (event) => {
+			const transcript = Array.from(event.results)
+				.map((result) => result[0])
+				.map((result) => result.transcript)
+				.join('');
+	
+			// Fill input fields based on speech input
+			const inputFields = document.querySelectorAll('input');
+			inputFields.forEach((inputField) => {
+				if (transcript.includes(inputField.name)) {
+					const inputValue = transcript.split(inputField.name)[1].trim();
+					inputField.value = inputValue;
+				}
+			});
+	
+			// Ask for input for next field
+			const unfilledFields = [...inputFields].filter((inputField) => !inputField.value);
+			if (unfilledFields.length > 0) {
+				const nextField = unfilledFields[0];
+				const message = `Please provide your ${nextField.name}`;
+				const synth = window.speechSynthesis;
+				const utterance = new SpeechSynthesisUtterance(message);
+				synth.speak(utterance);
+			} else {
+				const message = 'Thank you for providing all the required information. Please click on "Book Now" to proceed with the booking.';
+				const synth = window.speechSynthesis;
+				const utterance = new SpeechSynthesisUtterance(message);
+				synth.speak(utterance);
+			}
+		});
+	
+		// Handle speech recognition errors
+		recognition.addEventListener('error', (event) => {
+			const message = `Oops! There was an error with speech recognition. Error code: ${event.error}`;
+			const synth = window.speechSynthesis;
+			const utterance = new SpeechSynthesisUtterance(message);
+			synth.speak(utterance);
+		});
+	
+		// Generate list of train names based on source and destination input
+		function generateTrainNames() {
+			// TODO: Add code to generate list of train names
+		}
+	
+		// Generate ticket based on form inputs
+		function generateTicket() {
+			// TODO: Add code to generate ticket
+		}
+	</script>
+	
+	  
+</body>
+</html>
